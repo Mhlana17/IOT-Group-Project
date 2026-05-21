@@ -37,3 +37,60 @@ To solve these challenges, this project proposes upgrading the existing RFID sys
 | Platform	| Purpose |
 | :-----: | :-----: |
 | Arduino IDE | Used to write, compile, and upload code to the Arduino Uno for controlling the RFID/NFC door lock system. |
+
+---
+
+# 🖥️ Code Documentation
+C++
+```
+#include <SPI.h>
+#include <MFRC522.h>
+
+#define RST_PIN 9
+#define SS_PIN 10
+
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+
+void setup() {
+    Serial.begin(9600);
+    SPI.begin();
+    mfrc522.PCD_Init();
+    mfrc522.PCD_SetAntennaGain(MFRC522::RxGain_max);
+    Serial.println("RFID Test - Hold card on reader");
+    Serial.println("Keep card still for 1-2 seconds");
+}
+
+void loop() {
+    if (mfrc522.PICC_IsNewCardPresent()) {
+        if (mfrc522.PICC_ReadCardSerial()) {
+            Serial.print("✓ Card detected! UID: ");
+            for (byte i = 0; i < mfrc522.uid.size; i++) {
+                Serial.print(mfrc522.uid.uidByte[i], HEX);
+                Serial.print(" ");
+            }
+            Serial.println();
+            mfrc522.PICC_HaltA();
+            delay(1000);
+        } else {
+            Serial.println("Card detected but read failed - try again");
+        }
+    } else {
+        Serial.println("No card - waiting...");
+    }
+    delay(500);
+} 
+```
+# Key Functions
+| Function Name             | Description                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------ |
+|  setup()                  | Initializes hardware peripherals, SPI communication, RFID reader, and serial communication |
+|  loop()                   | Continuously checks for RFID cards and reads/display the card UID                          |
+|  PICC_IsNewCardPresent()  | Detects whether a new RFID card is near the reader                                         |
+|  PICC_ReadCardSerial()    | Reads the UID (serial number) of the detected RFID card                                    |
+|  PCD_Init()               | Initializes the MFRC522 RFID reader module                                                 |
+|  PCD_SetAntennaGain()     | Sets the RFID antenna signal strength to maximum                                           |
+|  PICC_HaltA()             | Stops communication with the RFID card after reading                                       |
+|  SPI.begin()              | Starts SPI communication between the Arduino and RFID module                               |
+|  Serial.begin()           | Starts serial communication with the computer                                              |
+| delay()                   | Pauses the program for a specified amount of time                                          |
+
