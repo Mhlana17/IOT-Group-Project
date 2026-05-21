@@ -30,3 +30,10 @@ To solve these challenges, this project proposes upgrading the existing RFID sys
 |  Buzzer  |  An audio signaling device that produces sound alerts or notifications.  |  1  |  Provides sound feedback for successful or failed access attempts.  |
 |  LED light  |  A light-emitting diode used as a visual indicator in electronic systems.  |  2  |  Indicates system status, such as access granted (green LED) or access denied (red LED).  |
 |  DSTV power Supply  |  A power adapter commonly used in electronic setups to provide stable DC voltage.   |  1  |  To act as the main power supply that supply the whole system with power, ensuring a stable operation of the Arduino, Relay and solenoid lock.  |
+
+---
+
+# 💻 Software & Technologies
+| Platform	| Purpose |
+| :-----: | :-----: |
+| Arduino IDE | Used to write, compile, and upload code to the Arduino Uno for controlling the RFID/NFC door lock system. |
